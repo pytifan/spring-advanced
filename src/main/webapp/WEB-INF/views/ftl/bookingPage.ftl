@@ -35,18 +35,22 @@
 </div>
 
 <div id="content">
-
+<div>
+  Event: ${bookedTicket.event.name}
+<br/>
+  Date: ${bookedTicket.dateTime}
+</div>
     <br/>
-    <table class="datatable">
+  <#-- <table class="datatable">
         <tr>
             <th>Event</th>   <th>Date and Time</th>    <th>Seats</th>  <th>Price</th>
         </tr>
-        <#list model["bookingPage"] as ticket>
+        <#list model["bookings"] as event>
             <tr>
-                <td>${ticket.event.name}</td><td>${ticket.dateTime}</td><td>${ticket.seats}</td><td>${ticket.price}</td>
+                <td>${event.name}</td><td>${event.rate}</td><td>${event.basePrice}</td><td>${event.dateTime}</td>
             </tr>
         </#list>
-    </table>
+    </table> -->
 </div>
 </body>
 </html>

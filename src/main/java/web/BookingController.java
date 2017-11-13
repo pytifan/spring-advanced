@@ -10,6 +10,8 @@ import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,24 +58,28 @@ public class BookingController {
         Ticket bookedTicket = bookingService.bookTicket(userByEmail, ticket);
 
         ModelAndView booking = new ModelAndView("bookingPage");
-        booking.addObject(bookedTicket);
+        booking.addObject("bookedTicket", bookedTicket);
         return booking;
     }
 
     private ZonedDateTime getZonedDateTime(String string) {
         return ZonedDateTime.parse(string, ISO_LOCAL_DATE_TIME).withZoneSameLocal(ZoneId.of("ECT"));
     }
-//
-//    @RequestMapping(value = "/price", method = RequestMethod.GET)
-//    public String price() {
-//        bookingService.getTicketPrice();
-//        return "bookings";
-//    }
-//
-//    @RequestMapping(value = "/tickets", method = RequestMethod.GET)
-//    public String ticketsForEvent() {
+
+    @RequestMapping(value = "/price", method = RequestMethod.GET)
+    public String price(String eventName, String auditorium, List<Integer> seats) {
+
+        eventService.getAll();
+//        bookingService.getTicketPrice(eventName, auditorium, LocalDateTime.now(), seats, userService.getById(1));
+        return "bookings";
+    }
+
+    @RequestMapping(value = "/tickets", method = RequestMethod.GET)
+    public String ticketsForEvent(@ModelAttribute("model") ModelMap model) {
 //        bookingService.getTicketsForEvent();
-//        return "bookings";
-//    }
+//        model.addAttribute("bookings", eventService.getAll());
+        model.addAttribute("bookings", eventService.getAll());
+        return "bookingPage";
+    }
 
 }
